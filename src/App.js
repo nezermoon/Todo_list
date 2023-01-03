@@ -1,23 +1,44 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import NewTaskBar from './Components/NewTaskBar/NewTaskBar';
+import Tasks from './Components/Tasks/Tasks';
+import CompletedTasksTitle from './Components/CompletedTasks/CompletedTasksTitle';
 
 function App() {
+  const [newTask, setNewTask] = useState('');
+  const [tasks, setTasks] = useState([]);
+
+  const completedTasksArray = tasks.filter((task) => task.isDone === true);
+  const inCompletedTasksArray = tasks.filter((task) => task.isDone === false);
+
+  function onInputChange(e) {
+    setNewTask(e.target.value);
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      setTasks([
+        ...tasks,
+        { name: newTask, isDone: false, id: new Date().valueOf() },
+      ]);
+      setNewTask('');
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <NewTaskBar
+        newTask={newTask}
+        onInputChange={onInputChange}
+        handleKeyDown={handleKeyDown}
+      ></NewTaskBar>
+      <Tasks
+        tasks={tasks}
+        array={inCompletedTasksArray}
+        setTasks={setTasks}
+      ></Tasks>
+      <CompletedTasksTitle></CompletedTasksTitle>
+      <Tasks array={completedTasksArray}></Tasks>
     </div>
   );
 }
