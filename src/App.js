@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import NewTaskBar from './Components/NewTaskBar/NewTaskBar';
 import Tasks from './Components/Tasks/Tasks';
-import CompletedTasksTitle from './Components/CompletedTasks/CompletedTasksTitle';
+import CompletedTasksTitle from './Components/CompletedTasksTitle/CompletedTasksTitle';
 
 function App() {
   const [newTask, setNewTask] = useState('');
@@ -15,8 +15,8 @@ function App() {
     setNewTask(e.target.value);
   }
 
-  function handleKeyDown(e) {
-    if (e.key === 'Enter') {
+  function addTask() {
+    if (newTask !== '') {
       setTasks([
         ...tasks,
         { name: newTask, isDone: false, id: new Date().valueOf() },
@@ -29,8 +29,8 @@ function App() {
     <div className='App'>
       <NewTaskBar
         newTask={newTask}
+        addTask={addTask}
         onInputChange={onInputChange}
-        handleKeyDown={handleKeyDown}
       ></NewTaskBar>
       <Tasks
         tasks={tasks}
@@ -38,7 +38,11 @@ function App() {
         setTasks={setTasks}
       ></Tasks>
       <CompletedTasksTitle></CompletedTasksTitle>
-      <Tasks array={completedTasksArray}></Tasks>
+      <Tasks
+        array={completedTasksArray}
+        tasks={tasks}
+        setTasks={setTasks}
+      ></Tasks>
     </div>
   );
 }

@@ -1,7 +1,11 @@
 import React from 'react';
 import './NewTaskBar.scss';
 
-function NewTaskBar({ newTask, onInputChange, handleKeyDown }) {
+function NewTaskBar({ newTask, onInputChange, addTask }) {
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') addTask();
+  }
+
   return (
     <>
       <input
@@ -12,6 +16,9 @@ function NewTaskBar({ newTask, onInputChange, handleKeyDown }) {
         onKeyDown={handleKeyDown}
         value={newTask}
       />
+      <span className='new-task-bar__btn' onClick={addTask}>
+        &#10596;
+      </span>
     </>
   );
 }

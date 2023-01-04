@@ -6,11 +6,11 @@ function Tasks({ array, setTasks, tasks }) {
   return (
     <>
       <div className='tasks'>
-        {array.map((task) => {
+        {array.map((taskItem) => {
           return (
             <TaskItem
-              key={task.id}
-              task={task}
+              key={taskItem.id}
+              taskItem={taskItem}
               setTasks={setTasks}
               tasks={tasks}
             ></TaskItem>
